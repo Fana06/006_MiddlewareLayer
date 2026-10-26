@@ -203,3 +203,17 @@ app.use((req, res) => {
     )
 })
 
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    
+    if (res.headersSent) {
+        return next(err)
+    }
+
+    return errorResponse(
+        res,
+        'Terjadi kesalahan pada server',
+        500,
+    )
+})
+
